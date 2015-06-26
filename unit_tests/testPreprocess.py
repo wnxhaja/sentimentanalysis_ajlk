@@ -1,10 +1,43 @@
-import unittest
+import unittest#, os, sys
 
-#execfile("../preprocess.py", globals())
+#sys.path.append(os.path.abspath(os.path.dirname(__file__)) + "../")
+#from preprocess import Preprocess
+
+execfile("../preprocess.py", globals())
 class TestPreprocess(unittest.TestCase):
 
-    def testPrintTweet(self):
-        self.assertEqual('hello', 'hello')
+	def setUp(self):
+		#print(sys)
+		tweet = "hello"
+		self.prep = Preprocess(tweet)
+
+	def testPrintTweet(self):
+		self.assertEqual(self.prep.printTweet(), "hello")
+
+	def testTweetWithElongatedWords(self):
+		tweet = "Huuuraaaaay so haaaaaapppppppppyyyyyyyy for today"
+		result = self.prep.truncateElongatedWords(tweet)
+		expected = "Huuraay so haappyy for today"
+		self.assertEqual(expected, result)
+
+	def testTweetWithContractions(self):
+		pass
+
+	def testTweetWithMentions(self):
+		pass
+
+	def testTweetWithURL(self):
+		pass
+
+	def testTweetWithHashtagNotEnd(self):
+		pass
+
+	def testTweetWithHashtagEnd(self):
+		pass
+
+	def testTweetSegmentation(self):
+		pass
+
 
 suite = unittest.TestSuite()
 suite.addTest(unittest.makeSuite(TestPreprocess))

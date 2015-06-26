@@ -1,5 +1,18 @@
-#sample_tweet = "What a finish! That game was awesome :D So happy for James! Bring it home baby, bring it home!"
+import re
+
 class Preprocess:
 
-    def printTweet(self, tweet):
-        print tweet
+	def __init__(self, tweet):
+		self.tweet = tweet
+
+
+	def printTweet(self):
+		return self.tweet
+
+	def preprocessTweet(self):
+		pass
+
+
+	#helper functions
+	def truncateElongatedWords(self, word):
+		return ""
