@@ -39,16 +39,37 @@ class TestPreprocess(unittest.TestCase):
 		self.assertEqual(result, expected)
 
 	def testPreprocessWithMentions(self):
-		pass
+		tweet = "Take a trip to Central City with @MiloVentimiglia and The PET Squad"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["take trip central city pet squad", []]]
+		self.assertEqual(result, expected)
 
 	def testPreprocessWithContractions(self):
-		pass
+		#edit it
+		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []]["dapat ipa zoom ang nawong pa more "
+		                                                                       "hahahaha", [":P"]]]
+		self.assertEqual(result, expected)
 
 	def testPreprocessWithElongatedWords(self):
-		pass
+		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaaaaaaaaaaaaaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []]["dapat ipa zoom ang nawong pa more "
+		                                                                       "hahahaha", [":P"]]]
+		self.assertEqual(result, expected)
 
 	def testPreprocessWithAllCases(self):
-		pass
+		#edit it
+		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []]["dapat ipa zoom ang nawong pa more "
+		                                                                       "hahahaha", [":P"]]]
+		self.assertEqual(result, expected)
 
 
 
