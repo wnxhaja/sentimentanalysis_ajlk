@@ -1,18 +1,31 @@
 import re
+from stopwords import StopWords
 
 class Preprocess:
 
-	def __init__(self, tweet):
-		self.tweet = tweet
+	def __init__(self, text):
+		self.text = text
+		self.stopWords = StopWords()
+
+	def preprocess(self):
+		pass
+		#self.segment()
+		#self.toLowerCase()
+		#self.removeMentions()
+		#self.handleHashTags()
+		#self.completContractions()
+		#self.truncateElongatedWords()
 
 
-	def printTweet(self):
-		return self.tweet
+		return []
 
-	def preprocessTweet(self):
+	def segmentText(self):
 		pass
 
-
-	#helper functions
 	def truncateElongatedWords(self, word):
-		return ""
+		pass
+
+	def
+
+	def toLowerCase(self):
+		self.text.lower()

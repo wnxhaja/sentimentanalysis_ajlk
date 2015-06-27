@@ -1,42 +1,55 @@
-import unittest#, os, sys
+import unittest, sys, os
 
-#sys.path.append(os.path.abspath(os.path.dirname(__file__)) + "../")
-#from preprocess import Preprocess
+PARENT_DIR = os.path.dirname(os.path.abspath(os.getcwd()))
+sys.path.append(PARENT_DIR)
 
-execfile("../preprocess.py", globals())
+#execfile("../preprocess.py", global())
+from preprocess import Preprocess
+
 class TestPreprocess(unittest.TestCase):
 
-	def setUp(self):
-		#print(sys)
-		tweet = "hello"
-		self.prep = Preprocess(tweet)
+	def testPreprocessNormalTweet(self):
+		tweet = "Thinking trying social media management tool? Test drive Sprout Social free today!"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["thinking trying social media management tool", []], ["test drive sprout social free today", []]]
+		self.assertEqual(result, expected)
 
-	def testPrintTweet(self):
-		self.assertEqual(self.prep.printTweet(), "hello")
+	def testPreprocessTweetWithMidHashtag(self):
+		tweet = "New always-on #AndroidWear apps keep info handy for when you are on the go"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["new always-on androidwear apps keep info handy when go", []]]
+		self.assertEqual(result, expected)
 
-	def testTweetWithElongatedWords(self):
-		tweet = "Huuuraaaaay so haaaaaapppppppppyyyyyyyy for today"
-		result = self.prep.truncateElongatedWords(tweet)
-		expected = "Huuraay so haappyy for today"
-		self.assertEqual(expected, result)
+	def testPreprocessTweetWithEndHashtag(self):
+		tweet = "THANKS FOR ALL THE QUESTIONS DURING THIS GAB! KEEP VOTING USING #ChoiceSciFiTVActress"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["thanks questions during gab", []], ["keep voting using", []]]
+		self.assertEqual(result, expected)
 
-	def testTweetWithContractions(self):
+
+	def testPreprocessWithEmoticons(self):
+		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
+		prep = Preprocess(tweet)
+		result = prep.preprocess()
+		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []] ["dapat ipa zoom ang nawong pa more "
+		                                                                        "hahahaha", [":P"]]]
+		self.assertEqual(result, expected)
+
+	def testPreprocessWithMentions(self):
 		pass
 
-	def testTweetWithMentions(self):
+	def testPreprocessWithContractions(self):
 		pass
 
-	def testTweetWithURL(self):
+	def testPreprocessWithElongatedWords(self):
 		pass
 
-	def testTweetWithHashtagNotEnd(self):
+	def testPreprocessWithAllCases(self):
 		pass
 
-	def testTweetWithHashtagEnd(self):
-		pass
-
-	def testTweetSegmentation(self):
-		pass
 
 
 suite = unittest.TestSuite()
