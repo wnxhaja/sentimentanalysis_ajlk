@@ -46,12 +46,10 @@ class TestPreprocess(unittest.TestCase):
 		self.assertEqual(result, expected)
 
 	def testPreprocessWithContractions(self):
-		#edit it
-		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
+		tweet = "this isn't real! :("
 		prep = Preprocess(tweet)
 		result = prep.preprocess()
-		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []]["dapat ipa zoom ang nawong pa more "
-		                                                                       "hahahaha", [":P"]]]
+		expected = [["real", []], ["", [":("]]]
 		self.assertEqual(result, expected)
 
 	def testPreprocessWithElongatedWords(self):
@@ -64,11 +62,10 @@ class TestPreprocess(unittest.TestCase):
 
 	def testPreprocessWithAllCases(self):
 		#edit it
-		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
+		tweet = "Won't be sleeping for an #overnight with @meyaan. This is going to be a looooooooooooooong night :( #thesis"
 		prep = Preprocess(tweet)
 		result = prep.preprocess()
-		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []]["dapat ipa zoom ang nawong pa more "
-		                                                                       "hahahaha", [":P"]]]
+		expected = [["sleeping overnight", []], ["going loong night", [":("]]]
 		self.assertEqual(result, expected)
 
 
