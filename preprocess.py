@@ -25,7 +25,5 @@ class Preprocess:
 	def truncateElongatedWords(self, word):
 		pass
 
-	def
-
 	def toLowerCase(self):
 		self.text.lower()

@@ -34,7 +34,7 @@ class TestPreprocess(unittest.TestCase):
 		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
 		prep = Preprocess(tweet)
 		result = prep.preprocess()
-		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []] ["dapat ipa zoom ang nawong pa more "
+		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []], ["dapat ipa zoom ang nawong pa more "
 		                                                                        "hahahaha", [":P"]]]
 		self.assertEqual(result, expected)
 
@@ -56,7 +56,7 @@ class TestPreprocess(unittest.TestCase):
 		tweet = "dili kaayu klaro imuha :( HAHAHAHA haaaaaaaaaaaaaaays! dapat ipa zoom ang nawong pa more HAHAHAHA :P"
 		prep = Preprocess(tweet)
 		result = prep.preprocess()
-		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []]["dapat ipa zoom ang nawong pa more "
+		expected = [["dili kaayo klaro imuha", [":("]], ["hahahaha haays", []], ["dapat ipa zoom ang nawong pa more "
 		                                                                       "hahahaha", [":P"]]]
 		self.assertEqual(result, expected)
 
