@@ -49,7 +49,7 @@ class TestPreprocess(unittest.TestCase):
 		tweet = "this isn't real! :("
 		prep = Preprocess(tweet)
 		result = prep.preprocess()
-		expected = [["real", []], ["", [":("]]]
+		expected = [["not real", []], ["", [":("]]]
 		self.assertEqual(result, expected)
 
 	def testPreprocessWithElongatedWords(self):
@@ -65,7 +65,7 @@ class TestPreprocess(unittest.TestCase):
 		tweet = "Won't be sleeping for an #overnight with @meyaan. This is going to be a looooooooooooooong night :( #thesis"
 		prep = Preprocess(tweet)
 		result = prep.preprocess()
-		expected = [["sleeping overnight", []], ["going loong night", [":("]]]
+		expected = [["not sleeping overnight", []], ["going loong night", [":("]]]
 		self.assertEqual(result, expected)
 
 
