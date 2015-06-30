@@ -61,7 +61,6 @@ class TestPreprocess(unittest.TestCase):
 		self.assertEqual(result, expected)
 
 	def testPreprocessWithAllCases(self):
-		#edit it
 		tweet = "Won't be sleeping for an #overnight with @meyaan. This is going to be a looooooooooooooong night :( #thesis"
 		prep = Preprocess(tweet)
 		result = prep.preprocess()
