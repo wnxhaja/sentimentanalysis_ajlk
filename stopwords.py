@@ -18,5 +18,8 @@ class StopWords:
 	def contains(self, word):
 		return word in self.STOPWORDS
 
+	def retrieveSet(self):
+		return self.DEFAULTSTOPWORDS
+
 
 
