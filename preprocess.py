@@ -26,7 +26,7 @@ class Preprocess:
 		self.text = re.sub(r'#', '', self.text)
 
 	def removeURLs(self):
-		pass
+		self.text = re.sub(r'(\w+:\/\/\S+)*', '', self.text)
 
 	def removeStopWords(self):
 		patternStopWords = '|'.join(self.stopWords.retrieveSet())
