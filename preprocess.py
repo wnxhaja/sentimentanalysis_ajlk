@@ -10,10 +10,10 @@ class Preprocess:
 
 	#returns a list
 	def preprocess(self):
-		pass
+		return []
 
 	def segmentText(self):
-		pass
+		return []
 
 	def truncateElongatedWords(self):
 		self.text = re.sub(r'(.)\1{2,}', r'\1\1', self.text)
@@ -21,8 +21,17 @@ class Preprocess:
 	def removeMentions(self):
 		self.text = re.sub(r'@(\w+)', r'', self.text)
 
-	#hashtags end sa text i erase?
 	def removeHashtags(self):
+		#remove end of text hashtag
+		splitText = self.text.split(' ')
+		while True:
+				if splitText[len(splitText) - 1][0] == "#":
+						splitText.pop()
+				else:
+						break
+		self.text = ' '.join(splitText)
+
+		#remove hash symbol if hashtag is not in the end of text
 		self.text = re.sub(r'#', '', self.text)
 
 	def removeURLs(self):
@@ -32,6 +41,8 @@ class Preprocess:
 		patternStopWords = '|'.join(self.stopWords.retrieveSet())
 		self.text = re.sub(r'\b(' + patternStopWords + r')\b', '', self.text)
 
+	def completeContractions(self):
+		self.text = re.sub(r"([a-z]+)n't", 'not', text)
 
 	def toLowerCase(self):
 		self.text.lower()
