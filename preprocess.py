@@ -1,11 +1,13 @@
 import re
 from stopwords import StopWords
+from emoticons import Emoticons
 
 class Preprocess:
 
 	def __init__(self, text):
 		self.text = text
 		self.stopWords = StopWords()
+		self.emoticons = Emoticons()
 		#self.repeatingCharactersPattern = r'(.)\1{2,}'
 
 	#returns a list
@@ -13,6 +15,12 @@ class Preprocess:
 		return []
 
 	def segmentText(self):
+		pattern = '|'.join(map(re.escape, self.emoticons.getEmoticons()))
+		segmentedText = re.split(r"[.?!]|(" + pattern + ")", self.text)
+		segmentedText = tagEmoticons(segmentedText)
+		return segmentedText
+
+	def tagEmoticons(self, segmentedText):
 		return []
 
 	def truncateElongatedWords(self):
@@ -38,7 +46,7 @@ class Preprocess:
 		self.text = re.sub(r'(\w+:\/\/\S+)*', '', self.text)
 
 	def removeStopWords(self):
-		patternStopWords = '|'.join(self.stopWords.retrieveSet())
+		patternStopWords = '|'.join(self.stopWords.getStopWords())
 		self.text = re.sub(r'\b(' + patternStopWords + r')\b', '', self.text)
 
 	def completeContractions(self):
