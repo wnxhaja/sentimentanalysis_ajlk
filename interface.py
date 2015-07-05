@@ -1,5 +1,6 @@
 
 from preprocess import Preprocess
+from featureExtract import FeatureExtract
 
 global prep
 
