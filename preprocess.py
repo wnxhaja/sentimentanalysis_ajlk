@@ -8,6 +8,10 @@ class Preprocess:
 		self.text = text
 		self.stopWords = StopWords()
 		self.emoticons = Emoticons()
+		if not self.checkForEndingPunctuation():
+			self.text = self.text + '.'
+		if not self.checkForEndingEmoticons():
+			self.text = self.text + '.'
 
 	#returns a list
 	def preprocess(self):
@@ -74,5 +78,11 @@ class Preprocess:
 
 	def completeContractions(self):
 		self.text = re.sub(r"([a-z]+)n't", 'not', self.text)
+
+	def checkForEndingPunctuation(self):
+		return self.text.endswith('.') or self.text.endswith('!') or self.text.endswith('?')
+
+	def checkForEndingEmoticons(self):
+		pass
 
 
