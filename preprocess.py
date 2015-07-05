@@ -11,7 +11,14 @@ class Preprocess:
 
 	#returns a list
 	def preprocess(self):
-		return []
+		self.truncateElongatedWords()
+		self.truncateElongatedPunctuations()
+		self.removeMentions()
+		self.removeHashtags()
+		self.removeStopWords()
+		self.completeContractions()
+		self.removeURLs()
+		return self.segmentText()
 
 	def segmentText(self):
 		pattern = '|'.join(self.emoticons.getEscapedEmoticons())
@@ -27,15 +34,20 @@ class Preprocess:
 		for i in range(len(segmentedText)):
 			if i%2 == 0:    #if even
 				tmpLst = [segmentedText[i]]
-				if i != 0:
-					segmentedTextWithTaggedEmoticons.append(tmpLst)
 			else:           #if odd
 				tmpLst.append(segmentedText[i])
+				segmentedTextWithTaggedEmoticons.append(tmpLst)
 
 		return segmentedTextWithTaggedEmoticons
 
+	def toLowerCase(self):
+		self.text.lower()
+
 	def truncateElongatedWords(self):
 		self.text = re.sub(r'(.)\1{2,}', r'\1\1', self.text)
+
+	def truncateElongatedPunctuations(self):
+		self.text = re.sub(r'([!?.])\1{2,}', r'\1', self.text)
 
 	def removeMentions(self):
 		self.text = re.sub(r'@(\w+)', r'', self.text)
@@ -61,7 +73,6 @@ class Preprocess:
 		self.text = re.sub(r'\b(' + patternStopWords + r')\b', '', self.text)
 
 	def completeContractions(self):
-		self.text = re.sub(r"([a-z]+)n't", 'not', text)
+		self.text = re.sub(r"([a-z]+)n't", 'not', self.text)
 
-	def toLowerCase(self):
-		self.text.lower()
+
