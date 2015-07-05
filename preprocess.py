@@ -1,19 +1,38 @@
 import re
 from stopwords import StopWords
+from emoticons import Emoticons
 
 class Preprocess:
 
 	def __init__(self, text):
 		self.text = text
 		self.stopWords = StopWords()
-		#self.repeatingCharactersPattern = r'(.)\1{2,}'
+		self.emoticons = Emoticons()
 
 	#returns a list
 	def preprocess(self):
 		return []
 
 	def segmentText(self):
-		return []
+		pattern = '|'.join(self.emoticons.getEscapedEmoticons())
+		segmentedText = re.split(r"[.?!]|(" + pattern + ")", self.text)
+		segmentedText.pop() #pop the last element of the list. From the regex, always appends a '' on the end of the
+		#  list
+		segmentedText = self.tagEmoticons(segmentedText)
+		return segmentedText
+
+	def tagEmoticons(self, segmentedText):
+		segmentedTextWithTaggedEmoticons = []
+		iter = 0
+		for i in range(len(segmentedText)):
+			if i%2 == 0:    #if even
+				tmpLst = [segmentedText[i]]
+				if i != 0:
+					segmentedTextWithTaggedEmoticons.append(tmpLst)
+			else:           #if odd
+				tmpLst.append(segmentedText[i])
+
+		return segmentedTextWithTaggedEmoticons
 
 	def truncateElongatedWords(self):
 		self.text = re.sub(r'(.)\1{2,}', r'\1\1', self.text)
@@ -38,7 +57,7 @@ class Preprocess:
 		self.text = re.sub(r'(\w+:\/\/\S+)*', '', self.text)
 
 	def removeStopWords(self):
-		patternStopWords = '|'.join(self.stopWords.retrieveSet())
+		patternStopWords = '|'.join(self.stopWords.getStopWords())
 		self.text = re.sub(r'\b(' + patternStopWords + r')\b', '', self.text)
 
 	def completeContractions(self):
