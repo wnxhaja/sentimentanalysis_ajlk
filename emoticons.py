@@ -8,8 +8,16 @@ class Emoticons:
 			':-(', '=/', '=('
 		}
 
+		self.EMOTICONSESCAPEDLIST = {
+		':\)', ':D', ':\(', ';\)', ':-\)', ':P', '=\)', '\(:', ';-\)', ':/', 'XD', '=D', ':o', '=\]', 'D:', ';D', ':\]',
+		':-\(', '=/', '=\('
+		}
+
 	def getEmoticons(self):
 		return self.EMOTICONSLIST
+
+	def getEscapedEmoticons(self):
+		return self.EMOTICONSESCAPEDLIST
 
 	def getPositiveEmoticons(self):
 		return []
