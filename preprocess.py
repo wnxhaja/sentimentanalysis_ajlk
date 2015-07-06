@@ -10,8 +10,8 @@ class Preprocess:
 		self.emoticons = Emoticons()
 		if not self.checkForEndingPunctuation():
 			self.text = self.text + '.'
-		if not self.checkForEndingEmoticons():
-			self.text = self.text + '.'
+		#if not self.checkForEndingEmoticons():
+		#	self.text = self.text + '.'
 
 	#returns a list
 	def preprocess(self):
@@ -30,6 +30,8 @@ class Preprocess:
 		segmentedText.pop() #pop the last element of the list. From the regex, always appends a '' on the end of the
 		#  list
 		segmentedText = self.tagEmoticons(segmentedText)
+		segmentedText = self.truncateSuccessiveSpaces(segmentedText)
+		segmentedText = self.toLowerCase(segmentedText)
 		return segmentedText
 
 	def tagEmoticons(self, segmentedText):
@@ -44,8 +46,23 @@ class Preprocess:
 
 		return segmentedTextWithTaggedEmoticons
 
-	def toLowerCase(self):
-		self.text.lower()
+	def truncateSuccessiveSpaces(self, segmentedText):
+		newSegmentedText = []
+		for segment in segmentedText:
+			text = segment[0]
+			text = re.sub(' +', ' ', text)
+			segment = [text, segment[1]]
+			newSegmentedText.append(segment)
+
+		return newSegmentedText
+
+	def toLowerCase(self, segmentedText):
+		lowerCasedSegment = []
+		for segment in segmentedText:
+			text  = segment[0]
+			lowerCasedSegment.append([text.lower(), segment[1]])
+
+		return lowerCasedSegment
 
 	def truncateElongatedWords(self):
 		self.text = re.sub(r'(.)\1{2,}', r'\1\1', self.text)
@@ -77,12 +94,12 @@ class Preprocess:
 		self.text = re.sub(r'\b(' + patternStopWords + r')\b', '', self.text)
 
 	def completeContractions(self):
-		self.text = re.sub(r"([a-z]+)n't", 'not', self.text)
+		self.text = re.sub(r"(.+)n't", 'not', self.text)
 
 	def checkForEndingPunctuation(self):
 		return self.text.endswith('.') or self.text.endswith('!') or self.text.endswith('?')
 
-	def checkForEndingEmoticons(self):
-		pass
+	#def checkForEndingEmoticons(self):
+	#	pass
 
 
