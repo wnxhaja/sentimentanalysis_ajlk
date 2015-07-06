@@ -9,7 +9,7 @@ class FeatureExtract:
 		text_list = self.text.split()
 
 		if len(text_list) == 1:
-			text_list.insert(0, "")
+			text_list.insert(0, None)
 
 		bigrams = self.find_ngrams(text_list, number)
 		return bigrams
