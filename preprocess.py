@@ -29,10 +29,10 @@ class Preprocess:
 		segmentedText.pop() #pop the last element of the list. From the regex, always appends a '' on the end of the
 		#  list
 		segmentedText = self.tagEmoticons(segmentedText)
-		segmentedText = self.truncateSuccessiveSpaces(segmentedText) #2 or more spaces is trasformed into 1 space
+		#segmentedText = self.truncateSuccessiveSpaces(segmentedText) #2 or more spaces is trasformed into 1 space
 		segmentedText = self.toLowerCase(segmentedText)
 		segmentedText = self.checkForLastSegmentElement(segmentedText) #for instances when last element of the
-		# segmented text is a ''
+		# segmented text is a '' and None for second segment
 		return segmentedText
 
 	def splitText(self):
@@ -74,7 +74,8 @@ class Preprocess:
 		return self.text.endswith('.') or self.text.endswith('!') or self.text.endswith('?')
 
 	def checkForLastSegmentElement(self, segmentedText):
-		if segmentedText[len(segmentedText) - 1][0] == '':
+		segment = segmentedText[len(segmentedText) - 1]
+		if segment[0] == '' and segment[1] == None:
 			segmentedText.pop()
 		return segmentedText
 
