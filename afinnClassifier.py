@@ -18,7 +18,25 @@ class Afinn:
 		for item in data:
 			item[0] = self.wordSentScore(item[0])
 			item[1] = self.emoticonSentScore(item[1])
-		print data
+		
+		if item[0] > 0 and item[1] == 'POS':
+			return "Intensified POSITIVE"
+		elif item[0] < 0 and item[1] == 'POS':
+			return "Negated NEGATIVE"
+		elif item[0] > 0 and item[1] == 'NEG':
+			return "Negated POSITIVE"
+		elif item[0] < 0 and item[1] == 'NEG':
+			return "Intensified NEGATIVE"
+		elif not item[0]:
+			if item[1] == 'POS':
+				return "POSITIVE"
+			else:
+				return "NEGATIVE"
+		elif not item[1]:
+			if item[0] >1:
+				return "POSITIVE"
+			else:
+				return "NEGATIVE"
 		
 	def wordSentScore(self, word_list):
 		sentiments = 0
