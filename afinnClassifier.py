@@ -23,7 +23,7 @@ class Afinn:
 
 		sent_score = float(sum(sentiments))/float(len(sentiments))
 
-		if sent_score > 0:
+		if sent_score >= 0:
 			print "Sentiment is Positive with a score of %.5f" % sent_score
 		else:
 			print "Sentiment is Negative with a score of %.5f" % sent_score
@@ -31,11 +31,15 @@ class Afinn:
 		
 	def wordSentScore(self, word_list):
 		sentiments = []
+		negators = {'not','no','never'}
 		if not word_list:
 			return None
 		else:
 			for tple in word_list:
-				sentiments.append(self.afinnDict.get(tple[1],0))
+				if tple[0] in negators:
+					sentiments.append(self.afinnDict.get(tple[1],0)*-1)
+				else:
+					sentiments.append(self.afinnDict.get(tple[1],0))
 		
 		sentiment = float(sum(sentiments))/math.sqrt(len(word_list))
 		return sentiment
