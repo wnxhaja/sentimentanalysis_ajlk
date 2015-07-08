@@ -26,8 +26,7 @@ while iter == 1:
 	print data
 	
 	A = Afinn()
-	afinnClassification = A.classify(data)
-	print "Afinn : " + afinnClassification
+	A.classify(data)
 
 
 	iter = input("Please enter 0 to exit and 1 to continue: ")
