@@ -13,6 +13,10 @@ class Emoticons:
 		':-\(', '=/', '=\('
 		}
 
+		self.POSITIVEEMOTICONS = {':)', ':D',';)', ':-)', ':P', '=)', '(:', ';-)', 'XD', '=D', ':o', '=]',';D', ':]'}
+
+		self.NEGATIVEEMOTICONS = {':(',':/',':-(', '=/', '=('}
+
 	def getEmoticons(self):
 		return self.EMOTICONSLIST
 
@@ -24,3 +28,11 @@ class Emoticons:
 
 	def getNegativeEmoticons(self):
 		return []
+
+	def getEmoticonSentiment(self,emoticon):
+		if emoticon in self.POSITIVEEMOTICONS:
+			return 'POS'
+		elif emoticon in self.NEGATIVEEMOTICONS:
+			return 'NEG'
+		else:
+			print None

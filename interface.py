@@ -1,6 +1,8 @@
 
 from preprocess import Preprocess
 from featureExtract import FeatureExtract
+from afinnClassifier import Afinn
+from emoticons import Emoticons
 
 global prep
 
@@ -16,13 +18,19 @@ while iter == 1:
 
 	#generate bigrams from preprocessed text
 	for item in data:
-		bigrams = FeatureExtract(item[0]).getBigrams
-		item[0] = bigrams
-		print item
+		if not item[0]:
+			item[0] = None
+		else:
+			bigrams = FeatureExtract(item[0]).getBigrams
+			item[0] = bigrams
+	print data
+	
+	A = Afinn()
+	A.classify(data)
+
 
 	iter = input("Please enter 0 to exit and 1 to continue: ")
 	print("\n")
-
 
 print("Goodbye!!")
 
