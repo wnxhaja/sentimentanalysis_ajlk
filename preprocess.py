@@ -25,13 +25,19 @@ class Preprocess:
 		return self.segmentText()
 
 	def segmentText(self):
-		pattern = '|'.join(self.emoticons.getEscapedEmoticons())
-		segmentedText = re.split(r"[.?!]|(" + pattern + ")", self.text)
+		segmentedText = self.splitText()
 		segmentedText.pop() #pop the last element of the list. From the regex, always appends a '' on the end of the
 		#  list
 		segmentedText = self.tagEmoticons(segmentedText)
-		segmentedText = self.truncateSuccessiveSpaces(segmentedText)
+		#segmentedText = self.truncateSuccessiveSpaces(segmentedText) #2 or more spaces is trasformed into 1 space
 		segmentedText = self.toLowerCase(segmentedText)
+		segmentedText = self.checkForLastSegmentElement(segmentedText) #for instances when last element of the
+		# segmented text is a '' and None for second segment
+		return segmentedText
+
+	def splitText(self):
+		pattern = '|'.join(self.emoticons.getEscapedEmoticons())
+		segmentedText = re.split(r"[.?!]|(" + pattern + ")", self.text)
 		return segmentedText
 
 	def tagEmoticons(self, segmentedText):
@@ -64,6 +70,15 @@ class Preprocess:
 
 		return lowerCasedSegment
 
+	def checkForEndingPunctuation(self):
+		return self.text.endswith('.') or self.text.endswith('!') or self.text.endswith('?')
+
+	def checkForLastSegmentElement(self, segmentedText):
+		segment = segmentedText[len(segmentedText) - 1]
+		if segment[0] == '' and segment[1] == None:
+			segmentedText.pop()
+		return segmentedText
+
 	def truncateElongatedWords(self):
 		self.text = re.sub(r'(.)\1{2,}', r'\1\1', self.text)
 
@@ -95,11 +110,5 @@ class Preprocess:
 
 	def completeContractions(self):
 		self.text = re.sub(r"(.+)n't", 'not', self.text)
-
-	def checkForEndingPunctuation(self):
-		return self.text.endswith('.') or self.text.endswith('!') or self.text.endswith('?')
-
-	#def checkForEndingEmoticons(self):
-	#	pass
 
 
