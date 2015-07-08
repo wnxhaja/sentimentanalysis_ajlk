@@ -35,4 +35,4 @@ class Emoticons:
 		elif emoticon in self.NEGATIVEEMOTICONS:
 			return 'NEG'
 		else:
-			print None
+			return None
